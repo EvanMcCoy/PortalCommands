@@ -1,0 +1,14 @@
+#################
+## Eclipse
+#################
+.project
+.metadata
+bin/
+.classpath
+.settings/
+
+##############
+##Maven
+##############
+
+/target
