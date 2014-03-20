@@ -1,0 +1,18 @@
+#CommandPortals Config File
+Portals:
+  example:
+    World: world
+    Min:
+      ==: Vector
+      x: 0.0
+      y: 0.0
+      z: 0.0
+    Max:
+      ==: Vector
+      x: 0.0
+      y: 0.0
+      z: 0.0
+    Command: command
+    Message: message
+  PortalList:
+  - example

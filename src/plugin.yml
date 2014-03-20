@@ -1,0 +1,8 @@
+name: PortalCommands
+main: net.kingdomofkingdoms.Qwertyness_.portalcommands.CommandHandler
+version: 1.0
+description: Allows the creation of portals to execute commands!
+    
+commands:
+    cmdportal:
+        description: create, edit, or remove portals
