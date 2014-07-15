@@ -14,12 +14,13 @@ public class Create extends CommandLabel {
 	private PortalUtil portalUtil;
 
 	public Create(PortalCommands plugin) {
-		super("createportal", "<portal_name> <-t sender_type> <command>", "Creates a portal.", plugin);
+		super("createportal", "<portal_name> <-t CONSOLE, PLAYER, or SPECIAL> <command>", "Creates a portal.", plugin);
 		this.plugin = plugin;
 		this.portalUtil = plugin.getPortalUtil();
 	}
 
 	public void run(Player player, String[] args) {
+		boolean createSuccess = false;
 		if (args.length < 3) {
 			player.sendMessage(ChatColor.RED + "Too few arguments! /interactable " + this.name + " " + this.syntax);
 			return;
@@ -37,7 +38,7 @@ public class Create extends CommandLabel {
 		if (args[2].equalsIgnoreCase("-t")) {
 			if (args[3].equalsIgnoreCase("player")) {
 				if (player.hasPermission("pc.portal.create.player")) {
-					this.portalUtil.create(player, portal, args[1]);
+					createSuccess = this.portalUtil.create(player, portal, args[1]);
 					portal.addCommand(new InteractCommand(PortalUtil.getPortalCommand(args), InteractSender.PLAYER));
 				}
 				else {
@@ -47,7 +48,7 @@ public class Create extends CommandLabel {
 			}
 			else if (args[3].equalsIgnoreCase("console")) {
 				if (player.hasPermission("pc.portal.create.console")) {
-					this.portalUtil.create(player, portal, args[1]);
+					createSuccess = this.portalUtil.create(player, portal, args[1]);
 					portal.addCommand(new InteractCommand(PortalUtil.getPortalCommand(args), InteractSender.CONSOLE));
 				}
 				else {
@@ -57,7 +58,7 @@ public class Create extends CommandLabel {
 			}
 			else if (args[3].equalsIgnoreCase("special")) {
 				if (player.hasPermission("pc.portal.create.special")) {
-					this.portalUtil.create(player, portal, args[1]);
+					createSuccess = this.portalUtil.create(player, portal, args[1]);
 					portal.addCommand(new InteractCommand(PortalUtil.getPortalCommand(args), InteractSender.SPECIAL));
 				}
 				else {
@@ -71,7 +72,7 @@ public class Create extends CommandLabel {
 		}
 		else {
 			if (player.hasPermission("pc.portal.create.player")) {
-				this.portalUtil.create(player, portal, args[1]);
+				createSuccess = this.portalUtil.create(player, portal, args[1]);
 				portal.addCommand(new InteractCommand(PortalUtil.getPortalCommand(args), InteractSender.PLAYER));
 			}
 			else {
@@ -79,7 +80,10 @@ public class Create extends CommandLabel {
 				return;
 			}
 		}
-		player.sendMessage(ChatColor.GREEN + "You have created the portal " + ChatColor.GOLD + portal.getName());
-		this.plugin.getInteractablesAPI().getInteractableManager().registerInteractable(portal);
+		if (createSuccess) {
+			player.sendMessage(ChatColor.GREEN + "You have created the portal " + ChatColor.GOLD + portal.getName());
+			this.plugin.getInteractablesAPI().getInteractableManager().registerInteractable(portal);
+		}
+		
 	}
 }

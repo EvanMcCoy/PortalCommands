@@ -13,7 +13,7 @@ import net.kingdomofkingdoms.Qwertyness_.portalcommands.utils.PortalUtil;
 public class AddCommand extends CommandLabel {
 
 	public AddCommand(PortalCommands plugin) {
-		super("addportalcommand", "Adds a command to specified portal.", "<portal_name> <-t CONSOLE or PLAYER> <command>", plugin);
+		super("addportalcommand", "Adds a command to specified portal.", "<portal_name> <-t CONSOLE, PLAYER, or SPECIAL> <command>", plugin);
 	}
 
 	public void run(Player player, String[] args) {

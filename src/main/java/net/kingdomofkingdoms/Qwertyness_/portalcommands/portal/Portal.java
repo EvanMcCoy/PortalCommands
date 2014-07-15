@@ -19,7 +19,6 @@
 
 package net.kingdomofkingdoms.Qwertyness_.portalcommands.portal;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,17 +29,7 @@ import net.kingdomofkingdoms.Qwertyness_.interactables.InteractablesPlugin;
 import net.kingdomofkingdoms.Qwertyness_.interactables.interactable.InteractCommand;
 import net.kingdomofkingdoms.Qwertyness_.interactables.interactable.Interactable;
 
-import org.bukkit.ChatColor;
-
-public class Portal implements Interactable {
-	private InteractablesPlugin plugin;
-	
-	//Attributes
-	public String name;
-	private int cooldown;
-	private List<InteractCommand> commands = new ArrayList<InteractCommand>();
-	private List<String> messages = new ArrayList<String>();
-	
+public class Portal extends Interactable {
 	//Location
 	protected Vector maximum = new Vector();
 	protected Vector minimum = new Vector();
@@ -50,79 +39,25 @@ public class Portal implements Interactable {
 	public String basePath;
 	
 	public Portal(InteractablesPlugin plugin) {
-		this.plugin = plugin;
+		super(plugin);
 	}
 	
 	public Portal(String name, InteractablesPlugin plugin) {
-		this.plugin = plugin;
+		super(plugin);
 		this.name = name;
 		this.basePath = "Portals." + this.getName();
 		this.initialize();
 	}
 	
 	public Portal(Portal portal) {
+		super(portal.getPlugin());
 		this.commands = portal.getCommands();
 		this.messages = portal.getMessages();
 		this.cooldown = portal.getCooldown();
 		this.name = portal.getName();
-		this.plugin = portal.getPlugin();
 		this.maximum = portal.getMaximum();
 		this.minimum = portal.getMinimum();
 		this.world = portal.getWorld();
-	}
-	
-	//////////////////////////////
-	// Name Methods
-	//////////////////////////////
-	
-	public String getName() {
-		return name;
-	}
-	
-	//////////////////////////////
-	// Command Methods
-	//////////////////////////////
-	
-	public List<InteractCommand> getCommands() {
-		return this.commands;
-	}
-	
-	public void addCommand(InteractCommand command) {
-		this.commands.add(command);
-	}
-
-	public void removeCommand(int index) {
-		this.commands.remove(index);
-	}
-	
-	public void setCommands(List<InteractCommand> commands) {
-		this.commands = commands;
-	}
-	
-	//////////////////////////////
-	// Message Methods
-	//////////////////////////////
-
-	public List<String> getMessages() {
-		try {
-			for (int counter = 0;counter < this.messages.size();counter++) {
-				String message = ChatColor.translateAlternateColorCodes('&', this.messages.get(counter));
-				this.messages.set(counter, message);
-			}
-		} catch(NullPointerException e) {}
-		return this.messages;
-	}
-	
-	public void addMessage(String message) {
-		this.messages.add(message);
-	}
-	
-	public void removeMessage(int index) {
-		this.messages.remove(index);
-	}
-	
-	public void setMessages(List<String> messages) {
-		this.messages = messages;
 	}
 	
 	//////////////////////////////
@@ -154,23 +89,6 @@ public class Portal implements Interactable {
 	}
 	
 	//////////////////////////////
-	// Cooldown Methods
-	//////////////////////////////
-	
-	public int getCooldown() {
-		return this.cooldown;
-	}
-	
-	public void setCooldown(int cooldown) {
-		this.cooldown = cooldown;
-	}
-	
-	
-	public InteractablesPlugin getPlugin() {
-		return this.plugin;
-	}
-	
-	//////////////////////////////
 	// Utils
 	//////////////////////////////
 
@@ -180,6 +98,7 @@ public class Portal implements Interactable {
 		values.put(this.basePath + ".commands", InteractCommand.toStringList(this.getCommands()));
 		values.put(this.basePath + ".messages", this.messages);
 		values.put(this.basePath + ".cooldown", this.cooldown);
+		values.put(this.basePath + ".uses", this.uses);
 		values.put(this.basePath + ".min", this.minimum);
 		values.put(this.basePath + ".max", this.maximum);
 		values.put(this.basePath + ".world", this.world);
@@ -191,7 +110,8 @@ public class Portal implements Interactable {
 		FileConfiguration dataFile = this.getPlugin().getInteractablesAPI().dataFiles.get(this.plugin).get();
 		this.setCommands(InteractCommand.toCommandList(dataFile.getStringList(this.basePath + ".commands")));
 		this.messages = (List<String>) dataFile.getList(this.basePath + ".messages");
-		this.cooldown = dataFile.getInt(this.basePath);
+		this.cooldown = dataFile.getInt(this.basePath + ".cooldown");
+		this.uses = dataFile.getInt(this.basePath + ".uses");
 		this.minimum = dataFile.getVector(this.basePath + ".min");
 		this.maximum = dataFile.getVector(this.basePath + ".max");
 		this.world = dataFile.getString(this.basePath + ".world");

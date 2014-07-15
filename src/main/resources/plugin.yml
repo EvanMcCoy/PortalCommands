@@ -1,6 +1,6 @@
 name: PortalCommands
 main: net.kingdomofkingdoms.Qwertyness_.portalcommands.PortalCommands
-version: 2.0
+version: 2.1
 author: Qwertyness
 depend: [Interactables, WorldEdit]
 description: Allows the creation of portals to execute commands!
@@ -21,6 +21,7 @@ permissions:
         children:
             pc.portal.create.console: true
             pc.portal.create.player: true
+            pc.portal.create.special: true
     pc.portal.delete:
         description: allows player to delete portals.
     pc.portal.edit.*:
@@ -37,21 +38,28 @@ permissions:
         description: allows player to create a console type portal.
     pc.portal.create.player:
         description: allows player to create a player type portal.
+    pc.portal.create.special:
+        description: allows player to create a special type portal.
     pc.portal.edit.command.*:
         description: allows player to add or remove commands of any type to a portal.
         children:
             pc.portal.edit.command.console: true
             pc.portal.edit.command.player: true
+            pc.portal.edit.command.special: true
             pc.portal.edit.command.remove: true
     pc.portal.edit.message:
         description: allows player to add or remove messages from a portal.
     pc.portal.edit.cooldown:
         description: allows player to modify the cooldown of a portal.
+    pc.portal.edit.uses:
+        description: allows player to modify the use limit of a portal.
 
 #4th Tier
     pc.portal.edit.command.console:
         description: allows the player to add commands of the console type.
     pc.portal.edit.command.player:
         description: allows player to add commands of the player type.
+    pc.portal.edit.command.special:
+        description: allows player to add commands of the special type.
     pc.portal.edit.command.remove:
-        description: allows player to remove a command froma portal.
+        description: allows player to remove a command from portal.

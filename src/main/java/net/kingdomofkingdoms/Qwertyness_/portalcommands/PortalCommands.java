@@ -23,21 +23,12 @@ package net.kingdomofkingdoms.Qwertyness_.portalcommands;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.kingdomofkingdoms.Qwertyness_.interactables.CooldownUtil;
 import net.kingdomofkingdoms.Qwertyness_.interactables.Interactables;
 import net.kingdomofkingdoms.Qwertyness_.interactables.InteractablesPlugin;
-import net.kingdomofkingdoms.Qwertyness_.portalcommands.command.AddCommand;
-import net.kingdomofkingdoms.Qwertyness_.portalcommands.command.AddMessage;
-import net.kingdomofkingdoms.Qwertyness_.portalcommands.command.Create;
-import net.kingdomofkingdoms.Qwertyness_.portalcommands.command.Delete;
-import net.kingdomofkingdoms.Qwertyness_.portalcommands.command.Info;
-import net.kingdomofkingdoms.Qwertyness_.portalcommands.command.ListCommands;
-import net.kingdomofkingdoms.Qwertyness_.portalcommands.command.ListMessages;
-import net.kingdomofkingdoms.Qwertyness_.portalcommands.command.RemoveCommand;
-import net.kingdomofkingdoms.Qwertyness_.portalcommands.command.RemoveMessage;
-import net.kingdomofkingdoms.Qwertyness_.portalcommands.command.SetCooldown;
+import net.kingdomofkingdoms.Qwertyness_.portalcommands.command.*;
 import net.kingdomofkingdoms.Qwertyness_.portalcommands.listener.PortalListener;
 import net.kingdomofkingdoms.Qwertyness_.portalcommands.portal.Portal;
-import net.kingdomofkingdoms.Qwertyness_.portalcommands.utils.CooldownUtil;
 import net.kingdomofkingdoms.Qwertyness_.portalcommands.utils.PortalUtil;
 import net.kingdomofkingdoms.Qwertyness_.portalcommands.utils.VersionConvertUtil;
 
@@ -82,6 +73,7 @@ public class PortalCommands extends JavaPlugin implements InteractablesPlugin {
         this.interactablesPlugin.getCommandHandler().registerCommand(new RemoveMessage(this));
         this.interactablesPlugin.getCommandHandler().registerCommand(new ListMessages(this));
         this.interactablesPlugin.getCommandHandler().registerCommand(new SetCooldown(this));
+        this.interactablesPlugin.getCommandHandler().registerCommand(new SetUses(this));
         this.interactablesPlugin.getCommandHandler().registerCommand(new Info(this));
         this.interactablesPlugin.getCommandHandler().registerCommand(new net.kingdomofkingdoms.Qwertyness_.portalcommands.command.List(this));
         

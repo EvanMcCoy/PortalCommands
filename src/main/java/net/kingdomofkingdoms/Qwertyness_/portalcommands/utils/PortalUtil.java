@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
@@ -25,15 +26,21 @@ public class PortalUtil {
 	// Create
 	//////////////////////////////
 	
-	public void create(Player player, Portal portal, String name) {
+	public boolean create(Player player, Portal portal, String name) {
 		portal.name = name;
-		portal.setMaximum(worldEdit.getSelection(player).getMaximumPoint().toVector());
-		portal.setMinimum(worldEdit.getSelection(player).getMinimumPoint().toVector());
-		portal.setWorld(worldEdit.getSelection(player).getWorld().getName());
-		portal.setCommands(new ArrayList<InteractCommand>());
-		portal.setMessages(new ArrayList<String>());
-		portal.setCooldown(0);
-		portal.save();
+		try {
+			portal.setMaximum(worldEdit.getSelection(player).getMaximumPoint().toVector());
+			portal.setMinimum(worldEdit.getSelection(player).getMinimumPoint().toVector());
+			portal.setWorld(worldEdit.getSelection(player).getWorld().getName());
+			portal.setCommands(new ArrayList<InteractCommand>());
+			portal.setMessages(new ArrayList<String>());
+			portal.setCooldown(0);
+			portal.save();
+			return true;
+		} catch(NullPointerException e) {
+			player.sendMessage(ChatColor.RED + "Error occurred. Did you make a WorldEdit selection?");
+			return false;
+		}
 	}
 	
 	//////////////////////////////

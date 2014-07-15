@@ -24,7 +24,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.scheduler.BukkitScheduler;
 
 import net.kingdomofkingdoms.Qwertyness_.interactables.interactable.InteractCommand;
 import net.kingdomofkingdoms.Qwertyness_.interactables.interactable.InteractSender;
@@ -32,15 +31,12 @@ import net.kingdomofkingdoms.Qwertyness_.interactables.interactable.Interactable
 import net.kingdomofkingdoms.Qwertyness_.portalcommands.PortalCommands;
 import net.kingdomofkingdoms.Qwertyness_.portalcommands.portal.Portal;
 import net.kingdomofkingdoms.Qwertyness_.portalcommands.portal.PortalRegion;
-import net.kingdomofkingdoms.Qwertyness_.portalcommands.utils.CooldownUtil;
 
 public class PortalListener implements Listener {
 	PortalCommands plugin;
-	private CooldownUtil cooldown;
 	
 	public PortalListener(PortalCommands plugin) {
 		this.plugin = plugin;
-		this.cooldown = Bukkit.getServer().getServicesManager().load(CooldownUtil.class);
 	}
 	
 	@EventHandler
@@ -51,7 +47,9 @@ public class PortalListener implements Listener {
 			if (!(interactable instanceof Portal)) {
 				continue;
 			}
-			
+			if (!interactable.getPlugin().getInteractablesAPI().getInteractableManager().canUse(player, interactable)) {
+				continue;
+			}
 			final PortalRegion portal = new PortalRegion((Portal) interactable, this.plugin);
 			
 			if (player.hasPermission("pc.portal.use." + portal.getName()) || player.hasPermission("pc.portal.use.*")) {
@@ -61,12 +59,10 @@ public class PortalListener implements Listener {
 					if (portal.isWithin(event.getFrom())) {
 						return;
 					}
-					if (this.cooldown.isCoolingDown(player.getName(), portal.getName())) {
-						return;
-					}
 					
 					try {
 						for (String message : portal.getMessages()) {
+							message = message.replaceAll("@p", player.getName());
 							player.sendMessage(message);
 						}
 					} catch (NullPointerException e) {}
@@ -78,20 +74,13 @@ public class PortalListener implements Listener {
 							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), executeCommand);
 						}
 						else if (command.getSender() == InteractSender.SPECIAL) {
-							player.chat(executeCommand);
+							player.chat("/" + executeCommand);
 						}
 						else {
 							Bukkit.dispatchCommand(player, executeCommand);
 						}
 					}
-					this.cooldown.addEntry(player.getName(), portal.getName());
-					
-					BukkitScheduler splugineduler = Bukkit.getServer().getScheduler();
-					splugineduler.runTaskLaterAsynchronously(this.plugin, new Runnable() {
-						public void run() {
-							cooldown.removeEntry(player.getName(), portal.getName());
-						}
-					}, portal.getCooldown()*20);
+					interactable.getPlugin().getInteractablesAPI().getInteractableManager().useInteractable(player, interactable);
 					break;
 				}
 			}
