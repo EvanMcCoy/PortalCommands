@@ -1,9 +1,9 @@
 name: PortalCommands
 main: net.kingdomofkingdoms.Qwertyness_.portalcommands.PortalCommands
-version: 2.1
+version: 2.1.1
 author: Qwertyness
 depend: [Interactables, WorldEdit]
-description: Allows the creation of portals to execute commands!
+description: Allows the creation of portals to execute commands or send messages!
 
 permissions:
 #Top Tier

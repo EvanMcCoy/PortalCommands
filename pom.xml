@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.kingdomofkingdoms.Qwertyness_</groupId>
   <artifactId>portalcommands</artifactId>
-  <version>2.1</version>
+  <version>2.1.1</version>
   <name>PortalCommands</name>
   
   <repositories>
@@ -22,7 +22,7 @@
     <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>bukkit</artifactId>
-      <version>1.7.9-R0.1-SNAPSHOT</version>
+      <version>1.7.10-R0.1-SNAPSHOT</version>
     </dependency>
     
     <dependency>
@@ -36,7 +36,7 @@
     <dependency>
       <groupId>net.kingdomofkingdoms.Qwertyness_</groupId>
       <artifactId>interactables</artifactId>
-      <version>1.0</version>
+      <version>1.1.1</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
