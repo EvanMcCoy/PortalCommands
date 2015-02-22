@@ -1,5 +1,5 @@
 name: PortalCommands
-main: net.kingdomofkingdoms.Qwertyness_.portalcommands.PortalCommands
+main: com.qwertyness.portalcommands.PortalCommands
 version: 2.1.1
 author: Qwertyness
 depend: [Interactables, WorldEdit]
